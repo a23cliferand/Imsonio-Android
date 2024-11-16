@@ -1,13 +1,11 @@
 package com.example.insomnioproject
 
-import com.google.gson.annotations.JsonAdapter
-
-
 object ScriptsManager {
 
     data class Script(
         val id: Int,
         val name: String,
-        val status: String
+        val status: String,
+        val logs: List<String>
     )
 }

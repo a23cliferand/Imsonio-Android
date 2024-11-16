@@ -1,5 +1,6 @@
 package com.example.insomnioproject.models
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -7,6 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.insomnioproject.ScriptsManager
+import com.example.insomnioproject.scriptList
+import com.example.myapplication.network.apiService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun scriptInfo(scrip: ScriptsManager.Script) {
@@ -30,7 +36,7 @@ fun scriptInfo(scrip: ScriptsManager.Script) {
                         Text("Stop")
                     }
                 } else {
-                    Button(onClick = { /* Acción del botón 1 */ }) {
+                    Button(onClick = { startScript(scrip.name)  } ) {
                         Text("Start")
                     }
                 }
@@ -46,9 +52,18 @@ fun scriptInfo(scrip: ScriptsManager.Script) {
     }
 }
 
+private fun startScript(name: String) {
+    Log.i("Script", "Starting script $name")
+    CoroutineScope(Dispatchers.IO).launch {
+        scriptList = apiService.startScript(name)
+    }
+}
+
+
+
 @Preview(showBackground = true)
 @Composable
 fun scriptInfo() {
-    val script = ScriptsManager.Script(1, "Script 1", "ON")
+    val script = ScriptsManager.Script(1, "Script 1", "ON", listOf("Script 1 description"))
     scriptInfo(script)
 }

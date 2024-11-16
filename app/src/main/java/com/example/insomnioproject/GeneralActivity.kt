@@ -21,7 +21,7 @@ fun GeneralActivityContent(scriptList: List<ScriptsManager.Script>) {
                     Log.i("Carrefour", scriptList.toString())
                     scriptList.forEach { script ->
                         scriptInfo(script)
-                        Log.i("ScriptList", scriptList.toString())
+                        Log.i("ScriptList", com.example.insomnioproject.scriptList.toString())
                     }
                 }
             }

@@ -5,8 +5,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 import retrofit2.http.GET
+import retrofit2.http.Path
 
-val BASE_URL = "http://10.0.2.2:3000"
+val BASE_URL = "10.0.2.2:3000"
 //val retrofit = Retrofit.Builder()
 //    .baseUrl(BASE_URL)
 //    .addConverterFactory(GsonConverterFactory.create())
@@ -14,15 +15,15 @@ val BASE_URL = "http://10.0.2.2:3000"
 //val apiService = retrofit.create(Interface::class.java)
 
 val retrofit = Retrofit.Builder()
-    .baseUrl(BASE_URL)
+    .baseUrl("http://" + BASE_URL)
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 val apiService = retrofit.create(Interface::class.java)
 
 interface Interface {
-    //GET tots els productes
     @GET("/getInfo")
     suspend fun getScriptsData(): List<ScriptsManager.Script>
-
+    @GET("/runScript/{name}")
+    suspend fun startScript(@Path("name") name: String): List<ScriptsManager.Script>
 }
 
