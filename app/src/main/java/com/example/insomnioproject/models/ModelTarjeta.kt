@@ -35,7 +35,7 @@ fun scriptInfo(scrip: ScriptsManager.Script, navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 if(scrip.status == "ON") {
-                    Button(onClick = { /* Acción del botón 1 */ } ) {
+                    Button(onClick = { stopScript(scrip.name) } ) {
                         Text("Stop")
                     }
                 } else {
@@ -74,6 +74,13 @@ private fun startScript(name: String) {
     Log.i("Script", "Starting script $name")
     CoroutineScope(Dispatchers.IO).launch {
         scriptList = apiService.startScript(name)
+    }
+}
+
+private fun stopScript(name: String) {
+    Log.i("Script", "Starting script $name")
+    CoroutineScope(Dispatchers.IO).launch {
+        scriptList = apiService.stopScript(name)
     }
 }
 

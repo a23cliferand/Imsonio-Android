@@ -25,5 +25,7 @@ interface Interface {
     suspend fun getScriptsData(): List<ScriptsManager.Script>
     @GET("/runScript/{name}")
     suspend fun startScript(@Path("name") name: String): List<ScriptsManager.Script>
+    @GET("/stopScript/{name}")
+    suspend fun stopScript(@Path("name") name: String): List<ScriptsManager.Script>
 }
 
