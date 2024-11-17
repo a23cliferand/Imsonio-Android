@@ -1,12 +1,15 @@
 package com.example.insomnioproject.models
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.insomnioproject.ScriptsManager
 import com.example.insomnioproject.scriptList
 import com.example.myapplication.network.apiService
@@ -15,7 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun scriptInfo(scrip: ScriptsManager.Script) {
+fun scriptInfo(scrip: ScriptsManager.Script, navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,16 +44,31 @@ fun scriptInfo(scrip: ScriptsManager.Script) {
                     }
                 }
 
-                Button(onClick = { /* Acción del botón 3 */ }) {
+                Button(onClick = {
+                    if(scrip.logs.isEmpty()){
+                        Toast.makeText(navController.context, "No logs", Toast.LENGTH_SHORT).show()
+                    } else{
+                        navController.navigate("log/${scrip.id}")
+                    }
+                })
+                {
                     Text("Log")
                 }
-                Button(onClick = { /* Acción del botón 3 */ }) {
-                    Text("Error")
+                Button(onClick = {
+                    if(scrip.errors.isEmpty()){
+                        Toast.makeText(navController.context, "No errors", Toast.LENGTH_SHORT).show()
+                    } else{
+                        navController.navigate("error/${scrip.id}")
+                    }
+                })
+                {
+                    Text("Errors")
                 }
             }
         }
     }
 }
+
 
 private fun startScript(name: String) {
     Log.i("Script", "Starting script $name")
@@ -63,7 +81,8 @@ private fun startScript(name: String) {
 
 @Preview(showBackground = true)
 @Composable
-fun scriptInfo() {
-    val script = ScriptsManager.Script(1, "Script 1", "ON", listOf("Script 1 description"))
-    scriptInfo(script)
+fun scriptInfoPreview() {
+    val script = ScriptsManager.Script("1", "Script 1", "ON", listOf("Script 1 description"), listOf("Script 1 description"))
+    val navController = rememberNavController()
+    scriptInfo(script, navController)
 }

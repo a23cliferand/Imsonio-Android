@@ -32,14 +32,20 @@ class MainActivity : ComponentActivity(), WebSocketClient.WebSocketEventListener
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "general") {
                     composable("general") {
-                        if(scriptList.isEmpty()){
+                        if (scriptList.isEmpty()) {
                             Log.i("Lidl", "No hi ha scripts")
-                        }
-                        else {
-                            GeneralActivityContent(scriptList)
+                        } else {
+                            GeneralActivityContent(scriptList, navController)
                         }
                     }
-
+                    composable("log/{id}") { backStackEntry ->
+                        val id = backStackEntry.arguments?.getString("id")
+                        LogActivityContent(scriptList, id, navController)
+                    }
+                    composable("error/{id}") { backStackEntry ->
+                        val id = backStackEntry.arguments?.getString("id")
+                        ErrorActivityContent(scriptList, id, navController)
+                    }
                 }
             }
         }
