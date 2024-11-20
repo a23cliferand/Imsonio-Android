@@ -1,5 +1,7 @@
 package com.example.insomnioproject.models
 
+import android.graphics.Color
+import android.graphics.Color.GREEN
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -16,6 +18,11 @@ import com.example.myapplication.network.apiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun scriptInfo(scrip: ScriptsManager.Script, navController: NavController) {
@@ -35,11 +42,15 @@ fun scriptInfo(scrip: ScriptsManager.Script, navController: NavController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 if(scrip.status == "ON") {
-                    Button(onClick = { stopScript(scrip.name) } ) {
+                    Button(onClick = { stopScript(scrip.name) },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                    ) {
                         Text("Stop")
                     }
                 } else {
-                    Button(onClick = { startScript(scrip.name)  } ) {
+                    Button(onClick = { startScript(scrip.name) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(  76, 199, 64 )
+                        )) {
                         Text("Start")
                     }
                 }
@@ -89,7 +100,7 @@ private fun stopScript(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun scriptInfoPreview() {
-    val script = ScriptsManager.Script("1", "Script 1", "ON", listOf("Script 1 description"), listOf("Script 1 description"))
+    val script = ScriptsManager.Script("1", "Script 1", "OFF", listOf("Script 1 description"), listOf("Script 1 description"))
     val navController = rememberNavController()
     scriptInfo(script, navController)
 }
