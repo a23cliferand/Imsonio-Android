@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -75,4 +76,7 @@ dependencies {
 
     implementation ("io.ktor:ktor-client-android:1.6.4")
     implementation ("io.socket:socket.io-client:2.0.0")
+
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
 }

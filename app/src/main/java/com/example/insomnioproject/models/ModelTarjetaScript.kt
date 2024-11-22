@@ -1,7 +1,6 @@
 package com.example.insomnioproject.models
 
 import android.graphics.Color
-import android.graphics.Color.GREEN
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -18,8 +17,6 @@ import com.example.myapplication.network.apiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.dp
