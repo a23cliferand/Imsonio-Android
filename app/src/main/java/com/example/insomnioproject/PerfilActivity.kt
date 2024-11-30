@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import com.example.insomnioproject.models.perfilInfo
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 
 
@@ -28,6 +29,11 @@ fun PerfilActivityContent(perfilList: List<PerfilsManager.Perfil>, navController
         topBar = {
             Button(onClick = { navController.navigate("general") }) {
                 Text("Volver al General")
+            }
+            Button(
+                onClick = { navController.navigate("createPerf") }
+            ) {
+                Text("Create Perfil")
             }
         },
         content = { paddingValues ->

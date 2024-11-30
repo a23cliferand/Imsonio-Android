@@ -20,10 +20,18 @@ import kotlinx.coroutines.runBlocking
 
 var scriptList by mutableStateOf(loadScripts())
 
-var perfilList by mutableStateOf(listOf<PerfilsManager.Perfil>())
-    private set
+private var _perfilList by mutableStateOf(listOf<PerfilsManager.Perfil>())
+
+var perfilList: List<PerfilsManager.Perfil>
+    get() = _perfilList
+    set(value) {
+        _perfilList = value
+        updateDatabaseWithPerfiles(value)
+    }
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var perfilDao: PerfilDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +44,14 @@ class MainActivity : ComponentActivity() {
 
         Log.i("Lidl", "Database: $db")
 
-        val perfilDao = db.perfilDao()
+        perfilDao = db.perfilDao()
 
         runBlocking {
             perfilList = perfilDao.getAllPerfiles().map {
                 PerfilsManager.Perfil(it.id, it.label, it.host, it.port, it.isDefault)
             }
+            Log.i("Lidl", "Perfiles: $perfilList")
         }
-        perfilList = perfilList + PerfilsManager.Perfil(1.toString(), "Default", "localhost", 8080, false)
-        updateDatabaseWithPerfiles(perfilList, perfilDao)
 
         setContent {
             InsomnioProjectTheme {
@@ -60,6 +67,9 @@ class MainActivity : ComponentActivity() {
                     composable("perfils") { backStackEntry ->
                         PerfilActivityContent(perfilList, navController)
                     }
+                    composable("createPerf") { backStackEntry ->
+                        CreatePerfilActivityContent(navController)
+                    }
                     composable("log/{id}") { backStackEntry ->
                         val id = backStackEntry.arguments?.getString("id")
                         LogActivityContent(scriptList, id, navController)
@@ -73,7 +83,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun updateDatabaseWithPerfiles(perfiles: List<PerfilsManager.Perfil>, perfilDao: PerfilDao) {
+    private fun updateDatabaseWithPerfiles(perfiles: List<PerfilsManager.Perfil>) {
         runBlocking {
             perfilDao.deleteAll()
             perfilDao.insertAll(perfiles.map {

@@ -11,6 +11,6 @@ object PerfilsManager {
         val label: String,
         val host: String,
         val port: Int,
-        val isDefault: Boolean
+        var isDefault: Boolean
     )
 }

@@ -2,12 +2,13 @@ package com.example.insomnioproject.rooms
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.insomnioproject.PerfilsManager
 
 @Dao
 interface PerfilDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(perfiles: List<PerfilsManager.Perfil>)
 
     @Query("DELETE FROM perfiles")

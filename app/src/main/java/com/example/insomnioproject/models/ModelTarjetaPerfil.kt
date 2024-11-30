@@ -26,7 +26,7 @@ fun perfilInfo(perfil: PerfilsManager.Perfil, navController: NavController) {
             Text(text = perfil.port.toString(), style = MaterialTheme.typography.bodyLarge)
             if (perfil.isDefault == true) {
                 Button(
-                    onClick = { perfil.isDefault == false; Log.i("perfil", perfil.isDefault.toString()) },
+                    onClick = { perfil.isDefault = false; Log.i("perfil", perfil.isDefault.toString()) },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(76, 199, 64))
                 ) {
                     Text("true")
