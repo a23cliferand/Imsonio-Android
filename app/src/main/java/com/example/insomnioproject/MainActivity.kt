@@ -20,14 +20,8 @@ import kotlinx.coroutines.runBlocking
 
 var scriptList by mutableStateOf(loadScripts())
 
-private var _perfilList by mutableStateOf(listOf<PerfilsManager.Perfil>())
 
-var perfilList: List<PerfilsManager.Perfil>
-    get() = _perfilList
-    set(value) {
-        _perfilList = value
-        updateDatabaseWithPerfiles(value)
-    }
+var perfilList: List<PerfilsManager.Perfil> = listOf()
 
 class MainActivity : ComponentActivity() {
 
